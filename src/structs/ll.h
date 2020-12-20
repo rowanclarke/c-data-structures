@@ -1,62 +1,61 @@
-#ifndef LINKED_LIST
+#ifndef LINKED_LIST_H
 
-#define LINKED_LIST
+#define LINKED_LIST_H
 
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node {
-    struct node *n; // point to next node
+typedef struct NODE {
+    struct PNODE n; // point to next NODE
 	void *v;		// value
-} node;
+} NODE, *PNODE;
 
-typedef struct linkedList {
-    struct node *h; // point to first node
+typedef struct LLIST {
+    struct PNODE h; // point to first NODE
 	int s;			// size
-} linkedList;
+} LLIST, *PLLIST;
 
-node* initNode(void *v);
-void initLinkedList(linkedList *ll, node *h);
-void addAfter(linkedList *ll, node *b, node *n);
-void removeAfter(linkedList *ll, node *b);
-void removeLast(linkedList *ll);
-void removeAt(linkedList *ll, int n);
-void printLinkedList(linkedList *ll, void (*f)(void*));
+PNODE initNode(void *v);
+void initList(PLLIST ll, PNODE h);
+void addAfterList(PLLIST ll, PNODE b, PNODE n);
+void removeAfterList(PLLIST ll, PNODE b);
+void removeAtList(PLLIST ll, int n);
+void printList(PLLIST ll, void (*f)(void*));
 
-node* initNode(void *v) {
-	node *n = malloc(sizeof(node));
+PNODE initNode(void *v) {
+	PNODE n = malloc(sizeof(NODE));
 	n->v = v;
 	return n;
 }
 
-void initLinkedList(linkedList *ll, node *h) {
+void initList(PLLIST ll, PNODE h) {
 	ll->h = h;
 	ll->s = 1;
 }
 
-void addAfter(linkedList *ll, node *b, node *n) {
+void addAfterList(PLLIST ll, PNODE b, PNODE n) {
     n->n = b->n;
     b->n = n;
     ll->s++;
 }
 
-void removeAfter(linkedList *ll, node *b) {
-    node *tmp;
+void removeAfterList(PLLIST ll, PNODE b) {
+    PNODE tmp;
     tmp = b->n->n;
     free(b->n);
     b->n = tmp;
     ll->s--;
 }
 
-void removeAt(linkedList *ll, int n) {
+void removeAtList(PLLIST ll, int n) {
 	if (n == 0) {
-		node *tmp;
+		PNODE tmp;
 	    tmp = ll->h->n;
 	    free(ll->h);
 		ll->h = tmp;
 		ll->s--;
 	} else {
-		node *p;
+		PNODE p;
 		int i;
 		p = ll->h;
 		for (i = 0; i < n-1; i++) p = p->n;
@@ -64,8 +63,8 @@ void removeAt(linkedList *ll, int n) {
 	}
 }
 
-void printLinkedList(linkedList *ll, void (*f)(void*)) {
-    node *p;
+void printList(PLLIST ll, void (*f)(void*)) {
+    PNODE p;
     int i;
 	p = ll->h;
     printf("size: %d\n", ll->s);

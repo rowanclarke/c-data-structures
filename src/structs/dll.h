@@ -1,33 +1,33 @@
-#ifndef DOUBLE_LINKED_LIST
+#ifndef DOUBLE_LINKED_LIST_H
 
-#define DOUBLE_LINKED_LIST
+#define DOUBLE_LINKED_LIST_H
 
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct doubleNode {
-	struct doubleNode *p; 	// point to previous node
-    struct doubleNode *n; 	// point to next node
+typedef struct DNODE {
+	struct DNODE *p; 	// point to previous node
+    struct DNODE *n; 	// point to next node
 	void *v;
-} doubleNode;
+} DNODE, *PDNODE;
 
-typedef struct doubleLinkedList {
-    struct doubleNode *h; 	// point to head node
-	int s;					// size of linked list
-} doubleLinkedList;
+typedef struct DLLIST {
+    struct PDNODE h; 	// point to head node
+	int s;			   // size of linked list
+} DLLIST, *PDLLIST;
 
-node* initNode(void *v) {
-	node *n = malloc(sizeof(node));
+PDNODE initNode(void *v) {
+	PDNODE n = malloc(sizeof(DNODE));
 	n->n = v;
 	return n;
 }
 
-void initDouble(linkedList *ll, node *h) {
+void initDList(PDLLIST dll, PDNODE h) {
 	ll->h = h;
 	ll->s = 1;
 }
 
-void addAfterDouble(doubleLinkedList *dll, doubleNode *b, doubleNode *n) {
+void addAfterDList(PDLLIST dll, PDNODE b, PDNODE n) {
     n->p = b;
 	n->n = b->n;
     b->n = n;
@@ -35,17 +35,17 @@ void addAfterDouble(doubleLinkedList *dll, doubleNode *b, doubleNode *n) {
     dll->s++;
 }
 
-void removeDouble(doubleLinkedList *dll, doubleNode *n) {
+void removeAfterDList(PDLLIST dll, PDNODE n) {
     n->p->n = n->n;
     n->n->p = n->p;
     free(n);
     dll->s--;
 }
 
-void printDouble(doubleLinkedList *dll, void (*f)(void*)) {
-	doubleNode *p;
+void printDList(PDLLIST dll, void (*f)(void*)) {
+	PDNODE p;
 	int i;
-    p = dll->h;
+	p = dll->h;
     printf("size: %d\n", dll->s);
     for (i = 0; i < dll->s; i++) {
         (*f)(p->v);

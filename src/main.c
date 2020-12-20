@@ -1,16 +1,16 @@
 #include "structs/ll.h"
 
-typedef struct person {
+typedef struct {
     char* f; // firstname
     char* s; // lastname
-} person;
+} PERSON, *PPERSON;
 
-void printPerson(person* p) {
+void printPerson(PPERSON p) {
     printf("{%s %s}", p->f, p->s);
 }
 
-person* initPerson(char* f, char* s) {
-    person* p = malloc(sizeof(person));
+PPERSON initPerson(char* f, char* s) {
+	PPERSON p = malloc(sizeof(PERSON));
     p->f = f;
     p->s = s;
     return p;
@@ -55,8 +55,6 @@ int main(int argc, char** argv) {
 	initLinkedList(&ll, n);
 	addAfter(&ll, n, initNode(initPerson("B", "B")));
 	printLinkedList(&ll, (void*) printPerson);*/
-	
-	// DOUBLE LINKED LIST
 	
 	return 0;
 }

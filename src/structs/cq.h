@@ -1,41 +1,42 @@
-#ifndef CIRCULAR_QUEUE
+#ifndef CIRCULAR_QUEUE_H
 
-#define CIRCULAR_QUEUE
+#define CIRCULAR_QUEUE_H
 
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct queue {
+typedef struct QUEUE {
     void **f;           // front
     void **b;           // back
     void **s;           // start
     void **e;           // end
-} queue;
+} QUEUE;
 
-void initQueue(queue* q, int s);
-void enqueue(queue *q, void *n);
-void dequeue(queue *q);
+void initQueue(QUEUE* q, int s);
+void enqueue(QUEUE *q, void *n);
+void dequeue(QUEUE *q);
+void printQueue(QUEUE *q, void (*f)(void*));
 
-void initQueue(queue* q, int s) {
+void initQueue(QUEUE* q, int s) {
     q->s = calloc(s, sizeof(void*));
     q->e = q->s+s;
     q->f = q->s;
     q->b = q->s-1;
 }
 
-void enqueue(queue *q, void *n) {
+void enqueue(QUEUE *q, void *n) {
     if ((q->b+1) == q->e) q->b=q->s;
     else q->b++;
     *q->b = n;
 }
 
-void dequeue(queue *q) {
+void dequeue(QUEUE *q) {
     free(*q->f);
     if ((q->f+1) == q->e) q->f=q->s;
     else q->f++;
 }
 
-void printQueue(queue *q, void (*f)(void*)) {
+void printQueue(QUEUE *q, void (*f)(void*)) {
     void **p;
     p = q->f;
     while (p != q->b) {
